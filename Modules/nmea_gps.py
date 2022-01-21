@@ -18,11 +18,13 @@ This script sets environment variables on the system to the current location so 
 Updated: 1/21/2022
 '''
 
+
 ### IMPORT LIBRARIES ###
 import serial
 import reverse_geocoder
 import logging
 import os
+
 
 ### DEFINE VARIABLES ###
 #Set up logging
@@ -36,6 +38,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 fh.setFormatter(formatter)                  #Add the format to the file handler
 
 tracker = 0 #This keeps track of the seconds before we check on the current state and county
+
 
 ### FUNCTIONS ###
 #Function to parse through the received NMEA GPS data from the USB dongle
@@ -128,6 +131,8 @@ if __name__ == '__main__':
     #Set up the serial port to read data from
     ser = serial.Serial("/dev/ttyACM0", baudrate = 9600, timeout = 0.5)
 
+    logger.info("Located the USB GPS device and started location tracking")
+
     while True:
         try:
             #Read the serial data and then call the parse function to convert the raw NMEA data into a readable format
@@ -135,4 +140,8 @@ if __name__ == '__main__':
             parseGPS(data)
 
         except KeyboardInterrupt:
+            logger.info("User quit the script with CTL-C")
+            quit()
+        except:
+            logger.critical("Unknown error caused script to crash!")
             quit()
