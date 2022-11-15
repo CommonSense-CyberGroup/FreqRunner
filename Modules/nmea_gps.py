@@ -4,6 +4,8 @@
 This module is for the testing and proof of concept for reading raw NMEA data from a GLONASS GPS USB and then processing it to a readable format.
 This also will then process the current coordinates and determine the county/zip code (in the US) that the user/device is in.
 
+This script is started on boot and is set to run as a service named 'freqrunner_gps'
+
 This script sets environment variables on the system to the current location so other scripts can access them without having to start this script and wait constantly
     FREQ_LOC = full location string
     FREQ_COUNTRY = Country
@@ -15,7 +17,7 @@ This script sets environment variables on the system to the current location so 
     FREQ_UPDATE = Last updated time of coordinates
 
 
-Updated: 1/21/2022
+Updated: 11/15/2022
 '''
 
 
