@@ -30,7 +30,7 @@ import os
 
 ### DEFINE VARIABLES ###
 #Set up logging
-logging_file = 'gps_testing.log'         #Define log file location for windows
+logging_file = 'gps_location.log'         #Define log file location for windows
 logger = logging.getLogger('GPS_Logging')  #Define log name
 logger.setLevel(logging.DEBUG)              #Set logger level
 fh = logging.FileHandler(logging_file)      #Set the file handler for the logger
