@@ -30,4 +30,11 @@ The basis of this project is to create a robust police/emergency scanner that wi
 
 
 ------------------------------------------------------------
+# HELPFUL LINKS:
+
+Adhoc WiFi Hotspot: https://www.tomshardware.com/how-to/raspberry-pi-access-point
+
+
+
+------------------------------------------------------------
 This entire project is meant to be an open-source scanner for those with a little programming knowledge, and those who want information but don't want to pay the hefty price tag for a police scanner. Obviously this program cannot (yet) do everything that those can.
