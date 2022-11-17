@@ -17,7 +17,7 @@ This script sets environment variables on the system to the current location so 
     FREQ_UPDATE = Last updated time of coordinates
 
 
-Updated: 11/15/2022
+Updated: 11/17/2022
 '''
 
 
@@ -89,17 +89,6 @@ def parseGPS(data):
             logger.info("State or county Changed from %s %s to %s %s", state_tracking, county_tracking, state, county)
             state_tracking = state
             county_tracking = county
-
-
-        #Print the values of env variables so we know that they are set/changing
-        #print("FREQ_LOC = ", os.environ.get('FREQ_LOC'))
-        #print("FREQ_COUNTRY = ", os.environ.get('FREQ_COUNTRY'))
-        #print("FREQ_CITY = ", os.environ.get('FREQ_CITY'))
-        #print("FREQ_STATE = ", os.environ.get('FREQ_STATE'))
-        #print("FREQ_COUNTY = ", os.environ.get('FREQ_COUNTY'))
-        #print("FREQ_LAT = ", os.environ.get('FREQ_LAT'))
-        #print("FREQ_LON = ", os.environ.get('FREQ_LON'))
-        #print("FREQ_UPDATE = ", os.environ.get('FREQ_UPDATE'), "\n")
 
         tracker += 1
 

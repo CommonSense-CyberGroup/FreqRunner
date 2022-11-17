@@ -9,7 +9,7 @@ Version: 1.0.1
 License: MIT
 
 Created: 1/19/2022
-Updated: 1/19/2022
+Updated: 11/17/2022
 
 Purpose:
     -This script is the backbone to the an automated Raspberry Pi Police Scanner. It utilizes an NMEA GPS unit to get the current location and format it nicely, then parses through downloaded RadioReference 
@@ -31,6 +31,7 @@ To Do / Notes:
 import time
 import csv
 import os
+import math
 
 ### CLASSES AND FUNCTIONS ###
 class freq_runner:
@@ -101,16 +102,30 @@ class freq_runner:
                 #Set notification text for user to see
                 self.user_notification = "GPS Location Has Changed!"
 
-
-                #Parse through the csv files with the new location to make the list
-                #CTID First
-                self.parse_ctid()
-
-                #Now SIDs
+                #Parse through the csv files with the new location to make the list - THIS IS WHERE WE NEED TO USE CHECK TOWER RANGE TO SEE WHAT CHANNELS WE NEED TO UPDATE
+                #Parse the SID first so we can determine the sites that are within our given radius
                 self.parse_sid()
+
+                #Parse the SID for the channels that are presented to the user
+                self.parse_ctid()
 
                 #Update the list on the user interface
                 self.update_user_page()
+
+    #Function to check if given tower is within the user's current radius for plotting and config changes
+    def check_tower_range(self):
+        #Define locations
+        center_point = {'lat': os.environ['FREQ_LAT'], 'lng': os.environ['FREQ_LON']}    #This would be the current GPS coords from the dongle
+        tower_location = [{'lat': 39.653376, 'lng': -105.182748}]  #This would be the point of a tower to see if it is in range
+
+        #Convert decimal locations into radiens
+        lon1, lat1, lon2, lat2 = map(math.radians, [center_point['lat'], center_point['lng'], tower_location[0]['lat'], tower_location[0]['lng']])
+
+        #Calculate the circle in miles and return if the given tower is within that circle
+        if ((2 * math.asin(math.sqrt(math.sin((lat2 - lat1)/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin((lon2 - lon1)/2)**2))) * 3963) <= 20.00:
+            print('\nTower is within range!\n')
+        else:
+            print('\nTower is out of range!\n')
 
     #Function to update the user page in the GUI
     def update_user_page(self):
@@ -213,10 +228,6 @@ class freq_runner:
 
                         #Check to see how many lines are in the file. If more than 1, we need to see which tower/station is closer and add that to the config file for OP25
                         print()
-
-    #Function for doing maths on GPS location data in order to see which coordinates in a list are nearest our current location - https://stackoverflow.com/questions/59736682/find-nearest-location-coordinates-in-land-using-python
-    def geo_maths(self):
-        print()
 
 
 ### THE THING ###

@@ -29,15 +29,16 @@ from selenium import webdriver
 import glob
 import csv
 import selenium
+import getpass
 
 ### DEFINE VARIABLES ###
 #Get username and password to log into RadioReference. DO NOT store them locally
-username = "username"
-password = "password"
+username = input("Username: ")
+password = getpass.getpass()
 
 #Define selenium options and set up driver
 options = webdriver.ChromeOptions()
-prefs = {"download.default_directory": "H:\\Radio_Scanner Info\\SDR and Scanners\\Scanner Downloads\\Trunked Systems Take 2"}
+prefs = {"download.default_directory": "H:\\Radio_Scanner Info\\SDR and Scanners\\Scanner Downloads\\New_Pull"}
 options.add_experimental_option("prefs",prefs)
 driver = webdriver.Chrome(executable_path=f'{dirname(__file__)}/chromedriver.exe', chrome_options=options)
 
@@ -113,7 +114,7 @@ if __name__ == '__main__':
         '''
 
         #Get the Trunk System information
-        with open("H:\\Radio_Scanner Info\\SDR and Scanners\\Scanner Downloads\\Trunked Systems Take 2\\tracking.csv", "w", newline='') as tracker:
+        with open("H:\\Radio_Scanner Info\\SDR and Scanners\\Scanner Downloads\\New_Pull\\tracking.csv", "w", newline='') as tracker:
             writer = csv.writer(tracker)
             headers = ["Location", "System", "ID#"]
             writer.writerow(headers)
@@ -139,8 +140,8 @@ if __name__ == '__main__':
                     writer.writerow(outline)
 
                 except selenium.common.exceptions.NoSuchElementException:
-                    file1 = f'H:\\Radio_Scanner Info\\SDR and Scanners\\Scanner Downloads\\Trunked Systems Take 2\\trs_site_{i}.csv'
-                    file2 = f'H:\\Radio_Scanner Info\\SDR and Scanners\\Scanner Downloads\\Trunked Systems Take 2\\trs_tg_{i}.csv'
+                    file1 = f'H:\\Radio_Scanner Info\\SDR and Scanners\\Scanner Downloads\\New_Pull\\trs_site_{i}.csv'
+                    file2 = f'H:\\Radio_Scanner Info\\SDR and Scanners\\Scanner Downloads\\New_Pull\\trs_tg_{i}.csv'
                     os.remove(file1)
                     os.remove(file2)
 
